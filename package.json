@@ -7,12 +7,13 @@
     "typescript": "^5.9.3"
   },
   "scripts": {
-  "start": "ts-node src/server.ts",
-  "dev": "nodemon src/server.ts",
-  "build": "tsc",
-  "serve": "node dist/server.js"
-},
+    "start": "ts-node src/server.ts",
+    "dev": "nodemon src/server.ts",
+    "build": "tsc",
+    "serve": "node dist/server.js"
+  },
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "firebase": "^12.5.0"
   }
 }
