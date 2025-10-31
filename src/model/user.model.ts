@@ -15,12 +15,16 @@ class UserModel {
         return this.users;
     }
 
-    removeUser(arr: User[], id: User["id"]) {
+    getUserByID(id: Number, arr: User[]): User | undefined{
+        return arr.find(user => user.id === id)
+    }
+
+    removeUser(arr: User[], id: Number) {
         return arr.filter(arr => arr.id !== id)
     }
 
-    updateUser(arr: User[], id: Number, email?: String, name?: String) {
-       
+    updateUser(id: Number, email?: String, name?: String) {
+      
     }
 
 }
