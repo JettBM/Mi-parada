@@ -11,10 +11,13 @@
     "start": "ts-node src/server.ts",
     "dev": "nodemon src/server.ts",
     "build": "tsc",
-    "serve": "node dist/server.js"
+    "serve": "node dist/server.js",
+    "test:firebase": "ts-node src/testConnection.ts"
   },
   "dependencies": {
+    "dotenv": "^17.2.3",
     "express": "^5.1.0",
-    "firebase": "^12.5.0"
+    "firebase": "^12.5.0",
+    "firebase-admin": "^13.5.0"
   }
 }

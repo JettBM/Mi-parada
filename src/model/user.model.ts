@@ -1,30 +1,31 @@
 interface User {
-    id: Number
-    name: String
-    email: String
+    id: number
+    name: string
+    email: string
     
 }
 class UserModel {
     private users: User[] = [];
 
-    addUser(user: User): void {
-        this.users.push(user)
+    addUser(user: User): User[] {
+        this.users = [...this.users, user];
+        return this.users;
     };
 
-    getUser(): User[] {
+    getUsers(): User[] {
         return this.users;
     }
 
-    getUserByID(id: Number, arr: User[]): User | undefined{
-        return arr.find(user => user.id === id)
+    getUserByID(id: number){
+        return this.users.find(user => user.id === id);
     }
 
-    removeUser(arr: User[], id: Number) {
-        return arr.filter(arr => arr.id !== id)
+    removeUser(id: number): User[] {
+        return this.users.filter(user => user.id !== id)
     }
 
-    updateUser(id: Number, email?: String, name?: String) {
-      
+    updateUser(id: number, email?: string, name?: string): User[] {
+        
     }
 
 }
