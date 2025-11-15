@@ -1,30 +1,18 @@
 import express, { Request, Response } from "express";
 import dotenv from "dotenv";
 import { db } from "./firebase";
-
-dotenv.config();
+import router from "./routes/user.routes";
 
 const app = express();
 
 app.use(express.json());
 
-const PORT = process.env.PORT || 5000;
+const PORT = 3000;
 
-async function testFirebaseConnection() {
-    try {
-        await db.ref('.info/connected')
-        console.log("Firebase connection successful")
-    } catch (error) {
-        console.error("Error connecting", error)
-        process.exit(1)
-    }
-}
-
-app.get('/', (req: Request, res: Response) => {
-    res.send("typescript API mi-parada");
+app.get('/', (req, res) => {
+    console.log("server running")
 })
 
-app.listen(PORT, async () => {
-    console.log(`server running on http://localhost:${PORT}`);
-    await testFirebaseConnection();
+app.listen(PORT, () => {
+    console.log(`server running on ${PORT}`);
 })

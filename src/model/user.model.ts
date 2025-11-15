@@ -1,6 +1,7 @@
 import { collection } from 'firebase/firestore';
 import { db } from '../firebase';
 
+
 interface User {
     id?: string
     name: string
@@ -32,29 +33,48 @@ class UserModel {
         } as User));
     }
 
-    getUserByID(id: string) {
-        return this.users.find(user => user.id === id);
-    }
+    async getUserByID(id: string):Promise <User | null> {
+        const docRef = this.userCollection.doc(id);
+        const docSnap = await docRef.get();
 
-    removeUser(id: string): User[] {
-        this.users = this.users.filter(user => user.id !== id)
-        return this.users;
-    }
 
-    updateUser(id: string, email?: string, name?: string): User | undefined{
-        const userIndex = this.users.findIndex(user => user.id === id);
-
-        if(userIndex === -1){
-            return undefined;
+        if(!docSnap.exists){
+            return null;
         }
 
-        this.users[userIndex] = {
-            ...this.users[userIndex],
-            ...(name && { name }),
-            ...(email && { email })
-        } as User
-
-        return this.users[userIndex];
+        return {
+            id: docSnap.id,
+            ...docSnap.data()
+        } as User;
+       
     }
 
+    async removeUser(id: string): Promise<void> {
+        await this.userCollection.doc(id).delete();
+    }
+
+    async updateUser(id: string, email?: string, name?: string): Promise<User | null> {
+        const docRef = this.userCollection.doc(id)
+        const docSnap = await docRef.get()
+
+        if(!docSnap.exists){
+            return null;
+        }
+
+        const updates: any = {};
+
+        if(name !== undefined){updates.name = name};
+        if(email !== undefined){updates.email = email};
+
+        await docRef.update(updates);
+
+        return {
+            id: docSnap.id,
+            ...docSnap.data(),
+            ...updates
+        } as User;
+    }
+        
 }
+
+export default UserModel;
